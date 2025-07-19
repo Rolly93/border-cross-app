@@ -43,6 +43,10 @@ body {
     bottom: -80px;
 }
 
+table *{
+  border: 3px #ff512f solid;
+}
+
 form{
 
 display: grid;

@@ -1,8 +1,8 @@
 export default function Circle(){
     return(
-            <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
+            <div className="background">
+        <div className="shape"></div>
+        <div classn="shape"></div>
     </div>
     )
 }
