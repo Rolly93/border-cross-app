@@ -1,12 +1,12 @@
+import sys
 from pathlib import Path
-from pydantic import BaseModel
+from typing import Dict , List
+from pydantic import BaseModel , Field
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse # Needed for serving index.html
-
 app = FastAPI()
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,6 +15,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+current_dir = Path(__file__).resolve().parent
+project_root =  current_dir.parents[0]
+
+print(current_dir.parents[0])
+from backend.app.api.endpoints import dashboard
+
+print(project_root)
+sys.path.append(str(project_root))
+
+app.include_router(dashboard.router)
 
 
 MOCK_EMAIL = "user@example.com"
@@ -26,9 +36,7 @@ class LoginRequest(BaseModel):
 
 
 
-@app.get("/DashboardPage")
-def get_data():
-    return {"message": "Hello from FastAPI"}
+
 
 
 @app.post("/login")
