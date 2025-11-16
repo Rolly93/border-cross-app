@@ -1,8 +1,6 @@
 import sys
 from pathlib import Path
-from typing import Dict , List
-from pydantic import BaseModel , Field
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,33 +17,13 @@ current_dir = Path(__file__).resolve().parent
 project_root =  current_dir.parents[0]
 
 print(current_dir.parents[0])
-from backend.app.api.endpoints import dashboard
+from backend.app.api.endpoints import dashboard , auth
 
 print(project_root)
 sys.path.append(str(project_root))
 
-app.include_router(dashboard.router)
-
-
-MOCK_EMAIL = "user@example.com"
-MOCK_PASSWORD = "123"
-
-class LoginRequest(BaseModel):
-    email: str
-    password: str
-
-
-
-
-
-
-@app.post("/login")
-def login(credentials: LoginRequest): 
-    if credentials.email == MOCK_EMAIL and credentials.password == MOCK_PASSWORD:
-        return {"message": "Login Successful", "user": credentials.email}
-    
-    raise HTTPException(status_code=401, detail="Invalid Email or password")
-
+app.include_router(dashboard.router,tags=["dashboard"])
+app.include_router(auth.router,tags=["Authentication"])
 
 def enable_prod_static():
     dist_dir = Path(__file__).resolve().parent.parent.parent / "frontend" / "build"

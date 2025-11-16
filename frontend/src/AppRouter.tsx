@@ -1,27 +1,29 @@
 // src/AppRouter.tsx
-import React,{useState} from 'react';
+import React,{useState ,useEffect} from 'react';
+
 import './css/App.css'
-import { createBrowserRouter, data, RouterProvider } from "react-router-dom";
+import {useNavigate, createBrowserRouter, RouterProvider } from "react-router-dom";
 import DashboardPage from "./dashboard/DashboardPage"; 
 import Layout from './Layout';
 import LogingPage from './Login/LoginPage';
-import path from 'path';
+import {LoginFormState} from './types/Shipment';
 
-
-const routes = [{
+const routes = [
+  {
     path: "/",
-    element: <Layout/>,
-    children:[
-        {
-            index: true,
-            element:<DashboardPage/>
-        },
-    {
-        path:"DashboardPage",
-        element:<DashboardPage/>
-    }]
-}]
-
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <DashboardPage />,
+      },
+      {
+        path: "DashboardPage",
+        element: <DashboardPage />,
+      },
+    ],
+  },
+];
 
 
 
@@ -30,23 +32,26 @@ const router = createBrowserRouter(routes);
 
 const AppRouter: React.FC = () => {
     
-    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [isLoggedIn, setLoggedIn] = useState<boolean>(false);
     const [userEmail, setUserEmail] = useState<string|null>(null);
-    
-    const handelLoginSucess = (data:{ email : string , password : string}) => {
-        setLoggedIn(true);
+
+    const handelLoginSucess = (data: LoginFormState) => {
+        console.log("Login Success Callback:", data);
+        setLoggedIn(data.isValidUser );
         setUserEmail(data.email);
         console.log("Navigation trigger");
     }
 
     return (
+
         <div className='App-header'>
-                    {isLoggedIn?(
-                        <RouterProvider router={router}/> 
+                     {isLoggedIn?(
+                         <RouterProvider
+                         router={router}/> 
                     ):(
-                        <LogingPage
-                         onLoginSuccess={handelLoginSucess}/>
-                    )}
+                         <LogingPage
+                          onLoginSuccess={handelLoginSucess}/>
+                     )}
         </div>
     );
 };

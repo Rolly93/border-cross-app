@@ -6,12 +6,10 @@ const NavigationLinks :React.FC = () => {
     return (
             <nav className="navbar">
               <ul className="navlist">
-
                 <li>
                     <Link to='/DashboardPage'>DashBoard</Link>
                 </li>
-              </ul>
-                
+              </ul>                
             </nav>
 
     )

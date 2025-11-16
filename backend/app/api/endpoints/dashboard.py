@@ -1,13 +1,8 @@
 from fastapi import APIRouter
-
-
-
-
 from ....app.model.shipmet import DashboardResponse
 from ....app.api.endpoints.services.shipment_service import get_shipment_data
 
-router = APIRouter(prefix="/api",
-                   tags=["dashboard"])
+router = APIRouter(prefix="/api")
 
 @router.get("/dashboard-data",
             response_model=DashboardResponse)

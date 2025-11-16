@@ -1,4 +1,10 @@
 
+export interface LoginFormState {
+    email: string;
+    password: string;
+    isValidUser: boolean;
+}
+
 
 export interface EmailOptions {
     isemailSender?:boolean,

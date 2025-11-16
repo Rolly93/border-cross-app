@@ -1,18 +1,13 @@
 import React from 'react';
 import { useLoginForm } from './useLoginForm'; // Importar el hook
 import '../css/Loging.css'; // Asumiendo que existe
-
-interface LoginFormState {
-    email: string;
-    password: string;
-}
+import {LoginFormState} from '../types/Shipment';
 
 interface LoginPageProps {
     onLoginSuccess?: (data: LoginFormState) => void;
 }
 
 const LogingPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
-    // 1. Usar el custom hook para obtener la lógica y el estado
     const { 
         formData, 
         message, 
@@ -30,9 +25,8 @@ const LogingPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             </div>
             
             <div className="login-container">
-                <h3>User Login </h3>
-                {/* 2. Usar handleSubmit directamente en el formulario */}
                 <form className='login-form' onSubmit={handleSubmit}>
+                <h3>User Login </h3>
                     <div className="form-group">
                         <label htmlFor="email">Email Address</label>
                         <input 
@@ -58,9 +52,7 @@ const LogingPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                         />
                     </div>
                     
-                    {/* 3. Mostrar el mensaje usando la clase CSS */}
                     {message && <div className={messageClass}>{message}</div>}
-                    
                     <button 
                         type='submit'
                         disabled={isLoading}
